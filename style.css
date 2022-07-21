@@ -1,0 +1,11 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#btnNewSticky {
+	float: right;
+	margin: 0.5%;
+	padding: 0% 0.25%;
+	z-index: 998;
+}
