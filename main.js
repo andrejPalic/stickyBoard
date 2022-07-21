@@ -5,8 +5,9 @@ function getRand(min, max) {
 btnNewSticky.addEventListener('click', onNewSticky);
 
 function onNewSticky() {
-	//console.log(getRand(1, 3))
 	let stickyNew = document.createElement('div');
+	stickyNew.style.top = getRand(0, 55,5) + '%';
+	stickyNew.style.left = getRand(0, 77.5) + '%';
 	stickyNew.classList.add('sticky');
 	document.body.appendChild(stickyNew);
 }
