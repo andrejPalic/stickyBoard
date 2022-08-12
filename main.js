@@ -19,6 +19,22 @@ function onStickyHover() {
 	stickyBlur('blur')
 	onmouseout = () => {stickyBlur()}
 
+	that.addEventListener('mousedown', stickyHold);
+	function stickyHold() {
+		document.onmouseup = stickyRelease;
+		document.onmousemove = stickyDrag;
+		
+		function stickyDrag() {
+			that.style.top = event.clientY + 'px';
+			that.style.left = event.clientX + 'px';
+		}
+
+		function stickyRelease() {
+			stickyBlur('clear');
+			document.onmousemove = null;
+		}
+	}
+
 	function stickyBlur(state) {
 		var sticky = document.querySelectorAll('.sticky');
 		for (i = 0; i < sticky.length; i++) {
