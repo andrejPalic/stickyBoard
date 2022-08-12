@@ -25,3 +25,7 @@
 	border-radius: 1em;
 	box-shadow: inset 3em 3em 5em rgba(255, 255, 255, 0.25);
 }
+
+.stickyBlur {
+	filter: blur(5px);
+}

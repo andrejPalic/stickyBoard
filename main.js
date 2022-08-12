@@ -10,4 +10,25 @@ function onNewSticky() {
 	stickyNew.style.left = getRand(0, 77.5) + '%';
 	stickyNew.classList.add('sticky', 'stickyColor' + getRand(1, 5));
 	document.body.appendChild(stickyNew);
+
+	stickyNew.addEventListener('mouseover', onStickyHover);
+}
+
+function onStickyHover() {
+	let that = this;
+	stickyBlur('blur')
+	onmouseout = () => {stickyBlur()}
+
+	function stickyBlur(state) {
+		var sticky = document.querySelectorAll('.sticky');
+		for (i = 0; i < sticky.length; i++) {
+			if (state == 'blur') {
+				sticky[i].classList.add('stickyBlur');
+			}
+			else {
+				sticky[i].classList.remove('stickyBlur');
+			}
+		}
+		that.classList.remove('stickyBlur');
+	}
 }
