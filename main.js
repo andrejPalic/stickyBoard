@@ -16,11 +16,19 @@ function onNewSticky() {
 
 function onStickyHover() {
 	let that = this;
+	let mouseDown;
 	stickyBlur('blur')
-	onmouseout = () => {stickyBlur()}
+
+	onmouseout = () => {
+		if (!mouseDown) {
+			stickyBlur('clear');
+		}
+	}
 
 	that.addEventListener('mousedown', stickyHold);
 	function stickyHold() {
+		mouseDown = true;
+		stickyBlur('blur');
 		document.onmouseup = stickyRelease;
 		document.onmousemove = stickyDrag;
 		
@@ -30,6 +38,7 @@ function onStickyHover() {
 		}
 
 		function stickyRelease() {
+			mouseDown = false;
 			stickyBlur('clear');
 			document.onmousemove = null;
 		}
