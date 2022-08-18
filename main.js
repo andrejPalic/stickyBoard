@@ -38,6 +38,7 @@ function onStickyHover() {
 		}
 
 		function stickyRelease() {
+			document.body.appendChild(that);
 			mouseDown = false;
 			stickyBlur('clear');
 			document.onmousemove = null;
