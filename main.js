@@ -15,12 +15,18 @@ function onNewSticky() {
 	stickyNew.appendChild(stickyBtnForm);
 
 	let stickyBtn1 = document.createElement('button');
-	stickyBtn1.innerHTML = 'Test 1';
+	stickyBtn1.innerHTML = 'Color';
 	stickyBtn1.classList.add('stickyBtn');
 	stickyBtnForm.appendChild(stickyBtn1);
 
+	let stickyBtn2 = document.createElement('button');
+	stickyBtn2.innerHTML = 'Delete';
+	stickyBtn2.classList.add('stickyBtn');
+	stickyBtnForm.appendChild(stickyBtn2);
+
 	stickyNew.addEventListener('mouseover', onStickyHover);
 	stickyBtn1.addEventListener('click', onChangeColor);
+	stickyBtn2.addEventListener('click', onDelete);
 }
 
 function onChangeColor(e) {
@@ -33,6 +39,11 @@ function onChangeColor(e) {
 	}
 	stickyCurrent.classList.remove('stickyColor' + oldColorId);
 	stickyCurrent.classList.add('stickyColor' + newColorId);
+}
+
+function onDelete(e) {
+	e.preventDefault();
+	document.body.removeChild(this.parentNode.parentNode);
 }
 
 function onStickyHover() {
