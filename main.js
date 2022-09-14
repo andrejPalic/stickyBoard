@@ -18,26 +18,21 @@ function onNewSticky() {
 	stickyBtn1.innerHTML = 'Test 1';
 	stickyBtn1.classList.add('stickyBtn');
 	stickyBtnForm.appendChild(stickyBtn1);
-	
-
-	let stickyBtn2 = document.createElement('button');
-	stickyBtn2.innerHTML = 'Test 2';
-	stickyBtn2.classList.add('stickyBtn');
-	stickyBtnForm.appendChild(stickyBtn2);
 
 	stickyNew.addEventListener('mouseover', onStickyHover);
-	stickyBtn1.addEventListener('click', onTest1);
-	stickyBtn2.addEventListener('click', onTest2);
+	stickyBtn1.addEventListener('click', onChangeColor);
 }
 
-function onTest1(e) {
+function onChangeColor(e) {
 	e.preventDefault();
-	console.log('Test 1')
-}
-
-function onTest2(e) {
-	e.preventDefault();
-	console.log('Test 2')
+	let stickyCurrent = this.parentNode.parentNode;
+	let oldColorId = parseInt(stickyCurrent.classList[1][11]);
+	let newColorId = oldColorId + 1;
+	if (newColorId > 5) {
+		newColorId = 1;
+	}
+	stickyCurrent.classList.remove('stickyColor' + oldColorId);
+	stickyCurrent.classList.add('stickyColor' + newColorId);
 }
 
 function onStickyHover() {
