@@ -11,13 +11,39 @@ function onNewSticky() {
 	stickyNew.classList.add('sticky', 'stickyColor' + getRand(1, 5));
 	document.body.appendChild(stickyNew);
 
+	let stickyBtnForm = document.createElement('form');
+	stickyNew.appendChild(stickyBtnForm);
+
+	let stickyBtn1 = document.createElement('button');
+	stickyBtn1.innerHTML = 'Test 1';
+	stickyBtn1.classList.add('stickyBtn');
+	stickyBtnForm.appendChild(stickyBtn1);
+	
+
+	let stickyBtn2 = document.createElement('button');
+	stickyBtn2.innerHTML = 'Test 2';
+	stickyBtn2.classList.add('stickyBtn');
+	stickyBtnForm.appendChild(stickyBtn2);
+
 	stickyNew.addEventListener('mouseover', onStickyHover);
+	stickyBtn1.addEventListener('click', onTest1);
+	stickyBtn2.addEventListener('click', onTest2);
+}
+
+function onTest1(e) {
+	e.preventDefault();
+	console.log('Test 1')
+}
+
+function onTest2(e) {
+	e.preventDefault();
+	console.log('Test 2')
 }
 
 function onStickyHover() {
 	let that = this;
 	let mouseDown;
-	stickyBlur('blur')
+	stickyBlur('blur');
 
 	onmouseout = () => {
 		if (!mouseDown) {
@@ -29,6 +55,7 @@ function onStickyHover() {
 	function stickyHold() {
 		mouseDown = true;
 		stickyBlur('blur');
+
 		document.onmouseup = stickyRelease;
 		document.onmousemove = stickyDrag;
 		
@@ -38,12 +65,15 @@ function onStickyHover() {
 		}
 
 		function stickyRelease() {
-			document.body.appendChild(that);
 			mouseDown = false;
 			stickyBlur('clear');
 			document.onmousemove = null;
+
+			if (event.target === that) {
+				document.body.appendChild(that);
+			}
 		}
-	}
+	}	
 
 	function stickyBlur(state) {
 		var sticky = document.querySelectorAll('.sticky');

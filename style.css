@@ -26,6 +26,17 @@
 	box-shadow: inset 3em 3em 5em rgba(255, 255, 255, 0.25);
 }
 
+.sticky > form {
+	position: absolute;
+	top: 85%;
+	margin: 1em;
+	visibility: hidden;
+}
+
+.sticky:hover > form {
+	visibility: visible;
+}
+
 .stickyBlur {
 	filter: blur(5px);
 	pointer-events: none;
