@@ -39,6 +39,7 @@ function onChangeColor(e) {
 	}
 	stickyCurrent.classList.remove('stickyColor' + oldColorId);
 	stickyCurrent.classList.add('stickyColor' + newColorId);
+	document.body.appendChild(stickyCurrent);
 }
 
 function onDelete(e) {
@@ -65,9 +66,9 @@ function onStickyHover() {
 		document.onmouseup = stickyRelease;
 		document.onmousemove = stickyDrag;
 
-					if (event.target === that) {
-				document.body.appendChild(that);
-			}
+		if (event.target === that) {
+			document.body.appendChild(that);
+		}
 		
 		function stickyDrag() {
 			that.style.top = event.clientY + 'px';
@@ -78,8 +79,6 @@ function onStickyHover() {
 			mouseDown = false;
 			stickyBlur('clear');
 			document.onmousemove = null;
-
-
 		}
 	}	
 
