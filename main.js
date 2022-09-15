@@ -64,6 +64,10 @@ function onStickyHover() {
 
 		document.onmouseup = stickyRelease;
 		document.onmousemove = stickyDrag;
+
+					if (event.target === that) {
+				document.body.appendChild(that);
+			}
 		
 		function stickyDrag() {
 			that.style.top = event.clientY + 'px';
@@ -75,9 +79,7 @@ function onStickyHover() {
 			stickyBlur('clear');
 			document.onmousemove = null;
 
-			if (event.target === that) {
-				document.body.appendChild(that);
-			}
+
 		}
 	}	
 
