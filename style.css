@@ -31,10 +31,13 @@
 	top: 85%;
 	margin: 1em;
 	visibility: hidden;
+	opacity: 0;
 }
 
 .sticky:hover > form {
 	visibility: visible;
+	transition: 0.5s opacity ease-in;
+	opacity: 1;
 }
 
 .stickyBlur {
