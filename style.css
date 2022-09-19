@@ -26,12 +26,31 @@
 	box-shadow: inset 3em 3em 5em rgba(255, 255, 255, 0.25);
 }
 
+.sticky > textarea {
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	width: 90%;
+	height: 90%;
+	background: none;
+	border: none;
+	resize: none;
+	outline: none;
+	padding: 0.1em;
+}
+
+.sticky > textarea:focus {
+	background: rgba(255, 255, 255, 0.5);
+	border-radius: 1em;
+}
+
 .sticky > form {
 	position: absolute;
 	top: 85%;
 	margin: 1em;
 	visibility: hidden;
 	opacity: 0;
+	z-index: 1;
 }
 
 .sticky:hover > form {

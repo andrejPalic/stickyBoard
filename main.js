@@ -14,6 +14,10 @@ function onNewSticky() {
 	let stickyBtnForm = document.createElement('form');
 	stickyNew.appendChild(stickyBtnForm);
 
+	let stickyTxt = document.createElement('textarea');
+	stickyTxt.setAttribute('spellcheck', 'false');
+	stickyNew.appendChild(stickyTxt);
+
 	let stickyBtn1 = document.createElement('button');
 	stickyBtn1.innerHTML = 'Color';
 	stickyBtn1.classList.add('stickyBtn');
@@ -64,9 +68,10 @@ function onStickyHover() {
 		stickyBlur('blur');
 
 		document.onmouseup = stickyRelease;
-		document.onmousemove = stickyDrag;
+		
 
 		if (event.target === that) {
+			document.onmousemove = stickyDrag;
 			document.body.appendChild(that);
 		}
 		
