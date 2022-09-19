@@ -68,7 +68,6 @@ function onStickyHover() {
 		stickyBlur('blur');
 
 		document.onmouseup = stickyRelease;
-		
 
 		if (event.target === that) {
 			document.onmousemove = stickyDrag;
