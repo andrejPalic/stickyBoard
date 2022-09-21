@@ -5,18 +5,19 @@ function getRand(min, max) {
 btnNewSticky.addEventListener('click', onNewSticky);
 
 function onNewSticky() {
-	let stickyNew = document.createElement('div');
-	stickyNew.style.top = getRand(0, 55,5) + '%';
-	stickyNew.style.left = getRand(0, 77.5) + '%';
-	stickyNew.classList.add('sticky', 'stickyColor' + getRand(1, 5));
-	document.body.appendChild(stickyNew);
+	let sticky = document.createElement('div');
+	sticky.style.top = getRand(0, 55,5) + '%';
+	sticky.style.left = getRand(0, 77.5) + '%';
+	sticky.classList.add('sticky', 'stickyColor' + getRand(1, 5));
+	document.body.appendChild(sticky);
 
 	let stickyBtnForm = document.createElement('form');
-	stickyNew.appendChild(stickyBtnForm);
+	sticky.appendChild(stickyBtnForm);
 
 	let stickyTxt = document.createElement('textarea');
 	stickyTxt.setAttribute('spellcheck', 'false');
-	stickyNew.appendChild(stickyTxt);
+	stickyTxt.style.fontSize = 'xx-large';
+	sticky.appendChild(stickyTxt);
 
 	let stickyBtn1 = document.createElement('button');
 	stickyBtn1.innerHTML = 'Color';
@@ -28,22 +29,35 @@ function onNewSticky() {
 	stickyBtn2.classList.add('stickyBtn');
 	stickyBtnForm.appendChild(stickyBtn2);
 
-	stickyNew.addEventListener('mouseover', onStickyHover);
+	sticky.addEventListener('mouseover', onStickyHover);
+	stickyTxt.addEventListener('input', onInput);
 	stickyBtn1.addEventListener('click', onChangeColor);
 	stickyBtn2.addEventListener('click', onDelete);
 }
 
+function onInput() {
+	let fontSizeArr = ['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'];
+
+	while (this.clientHeight == this.scrollHeight && this.style.fontSize != 'xx-large') {
+		this.style.fontSize = fontSizeArr[fontSizeArr.indexOf(this.style.fontSize) + 1];
+	}
+
+	while (this.clientHeight != this.scrollHeight && this.style.fontSize != 'xx-small') {
+		this.style.fontSize = fontSizeArr[fontSizeArr.indexOf(this.style.fontSize) - 1];
+	}
+}
+
 function onChangeColor(e) {
 	e.preventDefault();
-	let stickyCurrent = this.parentNode.parentNode;
-	let oldColorId = parseInt(stickyCurrent.classList[1][11]);
+	let sticky = this.parentNode.parentNode;
+	let oldColorId = parseInt(sticky.classList[1][11]);
 	let newColorId = oldColorId + 1;
 	if (newColorId > 5) {
 		newColorId = 1;
 	}
-	stickyCurrent.classList.remove('stickyColor' + oldColorId);
-	stickyCurrent.classList.add('stickyColor' + newColorId);
-	document.body.appendChild(stickyCurrent);
+	sticky.classList.remove('stickyColor' + oldColorId);
+	sticky.classList.add('stickyColor' + newColorId);
+	document.body.appendChild(sticky);
 }
 
 function onDelete(e) {
