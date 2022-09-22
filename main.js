@@ -16,6 +16,7 @@ function onNewSticky() {
 
 	let stickyTxt = document.createElement('textarea');
 	stickyTxt.setAttribute('spellcheck', 'false');
+	stickyTxt.setAttribute('maxlength', '1500');
 	stickyTxt.style.fontSize = 'xx-large';
 	sticky.appendChild(stickyTxt);
 
