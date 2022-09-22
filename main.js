@@ -32,8 +32,11 @@ function onNewSticky() {
 
 	sticky.addEventListener('mouseover', onStickyHover);
 	stickyTxt.addEventListener('input', onInput);
+	stickyTxt.addEventListener('focusout', storeStickies);
 	stickyBtn1.addEventListener('click', onChangeColor);
 	stickyBtn2.addEventListener('click', onDelete);
+
+	storeStickies()
 }
 
 function onInput() {
@@ -59,11 +62,15 @@ function onChangeColor(e) {
 	sticky.classList.remove('stickyColor' + oldColorId);
 	sticky.classList.add('stickyColor' + newColorId);
 	document.body.appendChild(sticky);
+
+	storeStickies()
 }
 
 function onDelete(e) {
 	e.preventDefault();
 	document.body.removeChild(this.parentNode.parentNode);
+
+	storeStickies()
 }
 
 function onStickyHover() {
@@ -87,6 +94,7 @@ function onStickyHover() {
 		if (event.target === that) {
 			document.onmousemove = stickyDrag;
 			document.body.appendChild(that);
+			storeStickies()
 		}
 		
 		function stickyDrag() {
@@ -113,4 +121,17 @@ function onStickyHover() {
 		}
 		that.classList.remove('stickyBlur');
 	}
+}
+
+var stickyArr;
+
+function storeStickies() {
+	stickyArr = [];
+	var sticky = document.querySelectorAll('.sticky');
+	for (i = 0; i < sticky.length; i++) {
+		stickyCurr = sticky[i]
+		stickyArr.push({stickyColor: stickyCurr.classList[1], stickyPositionX: stickyCurr.style.left, stickyPositionY: stickyCurr.style.top, stickyContent: stickyCurr.lastChild.value});
+	}
+	console.clear()
+	console.table(stickyArr)
 }
