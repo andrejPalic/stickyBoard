@@ -3,11 +3,16 @@
 	padding: 0;
 }
 
-#btnNewSticky {
+#mainBtnForm {
 	float: right;
-	margin: 0.5%;
-	padding: 0% 0.25%;
 	z-index: 1;
+}
+
+#mainBtnForm > button {
+	width: 90%;
+	margin: 0.5%;
+	float: right;
+	padding: 0% 0.25%;
 }
 
 .sticky {
