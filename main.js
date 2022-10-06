@@ -1,23 +1,24 @@
 var stickyArr;
 var stickyArrOld;
 
-function getRand(min, max) {
-	return Math.floor(Math.random() * (max - min + 1) ) + min;
-}
-
 btnNew.addEventListener('click', onNewSticky);
 btnUndo.addEventListener('click', onUndo);
 
-function onUndo (e) {
+function getRand(min, max) { //clean
+	return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+
+function onUndo (e) { //clean
 	e.preventDefault();
+
 	let stickyOld = document.body.querySelectorAll('.sticky');
+
 	for (i = 0; i < stickyOld.length; i++) {
-		document.body.removeChild(stickyOld[i])
+		document.body.removeChild(stickyOld[i]);
 	}
-	if (!stickyArrOld) {}
-	else {
+	if (stickyArrOld) {
 		for (i = 0; i < stickyArrOld.length; i++) {
-			onNewSticky(e, stickyArrOld[i])
+			onNewSticky(e, stickyArrOld[i]);
 		}
 	}
 	saveStickies();
@@ -32,9 +33,9 @@ function onNewSticky(e, stickyCurr) {
 		sticky.classList.add('sticky', 'stickyColor' + getRand(1, 5));
 	}
 	else {
-		sticky.style.top = stickyCurr.posY
-		sticky.style.left = stickyCurr.posX
-		sticky.classList.add('sticky', stickyCurr.stickyColor)
+		sticky.style.top = stickyCurr.posY;
+		sticky.style.left = stickyCurr.posX;
+		sticky.classList.add('sticky', stickyCurr.stickyColor);
 	}
 	document.body.appendChild(sticky);
 
@@ -72,45 +73,45 @@ function onNewSticky(e, stickyCurr) {
 	if (!stickyCurr) {saveStickies()}
 }
 
-function onInput() {
+function onInput() { //clean
 	let fontSizeArr = ['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'];
 
 	while (this.clientHeight == this.scrollHeight && this.style.fontSize != 'xx-large') {
 		this.style.fontSize = fontSizeArr[fontSizeArr.indexOf(this.style.fontSize) + 1];
 	}
-
 	while (this.clientHeight != this.scrollHeight && this.style.fontSize != 'xx-small') {
 		this.style.fontSize = fontSizeArr[fontSizeArr.indexOf(this.style.fontSize) - 1];
 	}
 }
 
-function onChangeColor(e) {
+function onChangeColor(e) { //clean
 	e.preventDefault();
+
 	let sticky = this.parentNode.parentNode;
 	let oldColorId = parseInt(sticky.classList[1][11]);
 	let newColorId = oldColorId + 1;
+
 	if (newColorId > 5) {
 		newColorId = 1;
 	}
 	sticky.classList.remove('stickyColor' + oldColorId);
 	sticky.classList.add('stickyColor' + newColorId);
 	document.body.appendChild(sticky);
-
-	saveStickies()
+	saveStickies();
 }
 
-function onDelete(e) {
+function onDelete(e) { //clean
 	e.preventDefault();
-	document.body.removeChild(this.parentNode.parentNode);
 
-	saveStickies()
+	document.body.removeChild(this.parentNode.parentNode);
+	saveStickies();
 }
 
 function onStickyHover() {
 	let that = this;
 	let mouseDown;
-	stickyBlur('blur');
 
+	stickyBlur('blur');
 	onmouseout = () => {
 		if (!mouseDown) {
 			stickyBlur('clear');
@@ -156,15 +157,22 @@ function onStickyHover() {
 	}
 }
 
-function saveStickies() {
-	stickyArrOld = stickyArr
+function saveStickies() { //clean
+	stickyArrOld = stickyArr;
 	stickyArr = [];
 	var sticky = document.querySelectorAll('.sticky');
+
 	for (i = 0; i < sticky.length; i++) {
-		stickyCurr = sticky[i]
-		stickyArr.push({posX: stickyCurr.style.left, posY: stickyCurr.style.top, stickyColor: stickyCurr.classList[1], txt: stickyCurr.lastChild.value, txtSize: stickyCurr.lastChild.style.fontSize});
+		stickyCurr = sticky[i];
+		stickyArr.push({
+			posX: stickyCurr.style.left,
+			posY: stickyCurr.style.top,
+			stickyColor: stickyCurr.classList[1],
+			txt: stickyCurr.lastChild.value,
+			txtSize: stickyCurr.lastChild.style.fontSize
+		});
 	}
-	console.clear()
-	console.table(stickyArr)
-	console.table(stickyArrOld)
+	console.clear();
+	console.table(stickyArr);
+	console.table(stickyArrOld);
 }
