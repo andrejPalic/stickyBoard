@@ -26,33 +26,34 @@ function onUndo (e) { //clean
 
 function onNewSticky(e, stickyCurr) {
 	e.preventDefault();
+
 	let sticky = document.createElement('div');
+	let stickyBtnForm = document.createElement('form');
+	let txt = document.createElement('textarea');
+
+	txt.setAttribute('spellcheck', 'false');
+	txt.setAttribute('maxlength', '1500');
+
+	document.body.appendChild(sticky);
+	sticky.appendChild(stickyBtnForm);
+	sticky.appendChild(txt);
+
 	if (!stickyCurr) {
 		sticky.style.top = getRand(0, 55,5) + '%';
 		sticky.style.left = getRand(0, 77.5) + '%';
+		txt.style.fontSize = 'xx-large';
+
 		sticky.classList.add('sticky', 'stickyColor' + getRand(1, 5));
+		saveStickies();
 	}
 	else {
 		sticky.style.top = stickyCurr.posY;
 		sticky.style.left = stickyCurr.posX;
+		txt.value = stickyCurr.txt;
+		txt.style.fontSize = stickyCurr.txtSize;
+
 		sticky.classList.add('sticky', stickyCurr.stickyColor);
 	}
-	document.body.appendChild(sticky);
-
-	let stickyBtnForm = document.createElement('form');
-	sticky.appendChild(stickyBtnForm);
-
-	let txt = document.createElement('textarea');
-	txt.setAttribute('spellcheck', 'false');
-	txt.setAttribute('maxlength', '1500');
-	if (stickyCurr) {
-		txt.value = stickyCurr.txt;
-		txt.style.fontSize = stickyCurr.txtSize
-	}
-	else {
-		txt.style.fontSize = 'xx-large';
-	}
-	sticky.appendChild(txt);
 
 	let stickyBtn1 = document.createElement('button');
 	stickyBtn1.innerHTML = 'Color';
@@ -69,12 +70,12 @@ function onNewSticky(e, stickyCurr) {
 	txt.addEventListener('focusout', saveStickies);
 	stickyBtn1.addEventListener('click', onChangeColor);
 	stickyBtn2.addEventListener('click', onDelete);
-
-	if (!stickyCurr) {saveStickies()}
 }
 
 function onInput() { //clean
-	let fontSizeArr = ['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'];
+	let fontSizeArr = [
+	'xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'
+	];
 
 	while (this.clientHeight == this.scrollHeight && this.style.fontSize != 'xx-large') {
 		this.style.fontSize = fontSizeArr[fontSizeArr.indexOf(this.style.fontSize) + 1];
