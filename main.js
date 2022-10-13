@@ -1,3 +1,5 @@
+window.onload = onLoad;
+
 var stickyArr;
 var stickyArrOld;
 
@@ -6,6 +8,18 @@ btnUndo.addEventListener('click', onUndo);
 
 function getRand(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+
+function onLoad(e) { //clean
+	let stickyArrJSON = localStorage.getItem('stickyArrSave');
+	stickyArr = JSON.parse(stickyArrJSON);
+
+	if (stickyArr) {
+		for (i = 0; i < stickyArr.length; i++) {
+			onNewSticky(e, stickyArr[i]);
+		}
+		saveStickies();
+	}
 }
 
 function onUndo (e) {
@@ -180,7 +194,12 @@ function saveStickies() {
 			txtSize: stickyCurr.firstChild.style.fontSize
 		});
 	}
+
+	let stickyArrJSON = JSON.stringify(stickyArr);
+	localStorage.setItem('stickyArrSave', stickyArrJSON);
+
 	console.clear();
 	console.table(stickyArr);
 	console.table(stickyArrOld);
+	console.log(localStorage.stickyArrSave);
 }
