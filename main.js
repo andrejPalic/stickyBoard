@@ -4,11 +4,11 @@ var stickyArrOld;
 btnNew.addEventListener('click', onNewSticky);
 btnUndo.addEventListener('click', onUndo);
 
-function getRand(min, max) { //clean
+function getRand(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
-function onUndo (e) { //clean
+function onUndo (e) {
 	e.preventDefault();
 
 	let stickyOld = document.body.querySelectorAll('.sticky');
@@ -28,15 +28,13 @@ function onNewSticky(e, stickyCurr) {
 	e.preventDefault();
 
 	let sticky = document.createElement('div');
-	let stickyBtnForm = document.createElement('form');
 	let txt = document.createElement('textarea');
 
 	txt.setAttribute('spellcheck', 'false');
 	txt.setAttribute('maxlength', '1500');
 
-	document.body.appendChild(sticky);
-	sticky.appendChild(stickyBtnForm);
 	sticky.appendChild(txt);
+	document.body.appendChild(sticky);
 
 	if (!stickyCurr) {
 		sticky.style.top = getRand(0, 55,5) + '%';
@@ -55,24 +53,33 @@ function onNewSticky(e, stickyCurr) {
 		sticky.classList.add('sticky', stickyCurr.stickyColor);
 	}
 
-	let stickyBtn1 = document.createElement('button');
-	stickyBtn1.innerHTML = 'Color';
-	stickyBtn1.classList.add('stickyBtn');
-	stickyBtnForm.appendChild(stickyBtn1);
-
-	let stickyBtn2 = document.createElement('button');
-	stickyBtn2.innerHTML = 'Delete';
-	stickyBtn2.classList.add('stickyBtn');
-	stickyBtnForm.appendChild(stickyBtn2);
-
 	sticky.addEventListener('mouseover', onStickyHover);
 	txt.addEventListener('input', onInput);
 	txt.addEventListener('focusout', saveStickies);
-	stickyBtn1.addEventListener('click', onChangeColor);
-	stickyBtn2.addEventListener('click', onDelete);
+
+	addButtons(sticky);
 }
 
-function onInput() { //clean
+function addButtons(sticky) {
+	let stickyBtnForm = document.createElement('form');
+	let stickyBtnNames = ['Color', 'placeholder', 'Delete'];
+
+	sticky.appendChild(stickyBtnForm);
+
+	for (j = 0; j < stickyBtnNames.length; j++) {
+		let stickyBtn = document.createElement('button');
+		stickyBtn.innerHTML = stickyBtnNames[j];
+		stickyBtnForm.appendChild(stickyBtn);
+		if (j != 2) {
+			stickyBtn.addEventListener('click', onChangeColor);
+		}
+		else {
+			stickyBtn.addEventListener('click', onDelete);
+		}
+	}
+}
+
+function onInput() {
 	let fontSizeArr = [
 	'xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'
 	];
@@ -85,7 +92,7 @@ function onInput() { //clean
 	}
 }
 
-function onChangeColor(e) { //clean
+function onChangeColor(e) {
 	e.preventDefault();
 
 	let sticky = this.parentNode.parentNode;
@@ -101,7 +108,7 @@ function onChangeColor(e) { //clean
 	saveStickies();
 }
 
-function onDelete(e) { //clean
+function onDelete(e) {
 	e.preventDefault();
 
 	document.body.removeChild(this.parentNode.parentNode);
@@ -158,7 +165,7 @@ function onStickyHover() {
 	}
 }
 
-function saveStickies() { //clean
+function saveStickies() {
 	stickyArrOld = stickyArr;
 	stickyArr = [];
 	var sticky = document.querySelectorAll('.sticky');
@@ -169,8 +176,8 @@ function saveStickies() { //clean
 			posX: stickyCurr.style.left,
 			posY: stickyCurr.style.top,
 			stickyColor: stickyCurr.classList[1],
-			txt: stickyCurr.lastChild.value,
-			txtSize: stickyCurr.lastChild.style.fontSize
+			txt: stickyCurr.firstChild.value,
+			txtSize: stickyCurr.firstChild.style.fontSize
 		});
 	}
 	console.clear();
