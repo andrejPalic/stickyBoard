@@ -10,7 +10,7 @@ function getRand(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
-function onLoad(e) { //clean
+function onLoad(e) {
 	let stickyArrJSON = localStorage.getItem('stickyArrSave');
 	stickyArr = JSON.parse(stickyArrJSON);
 
@@ -25,11 +25,7 @@ function onLoad(e) { //clean
 function onUndo (e) {
 	e.preventDefault();
 
-	let stickyOld = document.body.querySelectorAll('.sticky');
-
-	for (i = 0; i < stickyOld.length; i++) {
-		document.body.removeChild(stickyOld[i]);
-	}
+	removeStickies();
 	if (stickyArrOld) {
 		for (i = 0; i < stickyArrOld.length; i++) {
 			onNewSticky(e, stickyArrOld[i]);
@@ -79,10 +75,10 @@ function addButtons(sticky) {
 	let stickyBtnNames = ['Color', 'placeholder', 'Delete'];
 
 	sticky.appendChild(stickyBtnForm);
-
 	for (j = 0; j < stickyBtnNames.length; j++) {
 		let stickyBtn = document.createElement('button');
 		stickyBtn.innerHTML = stickyBtnNames[j];
+		
 		stickyBtnForm.appendChild(stickyBtn);
 		if (j != 2) {
 			stickyBtn.addEventListener('click', onChangeColor);
@@ -186,6 +182,7 @@ function saveStickies() {
 
 	for (i = 0; i < sticky.length; i++) {
 		stickyCurr = sticky[i];
+
 		stickyArr.push({
 			posX: stickyCurr.style.left,
 			posY: stickyCurr.style.top,
@@ -202,4 +199,12 @@ function saveStickies() {
 	console.table(stickyArr);
 	console.table(stickyArrOld);
 	console.log(localStorage.stickyArrSave);
+}
+
+function removeStickies() {
+	let stickyOld = document.body.querySelectorAll('.sticky');
+
+	for (i = 0; i < stickyOld.length; i++) {
+		document.body.removeChild(stickyOld[i]);
+	}
 }
