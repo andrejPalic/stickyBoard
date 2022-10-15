@@ -5,6 +5,7 @@ var stickyArrOld;
 
 btnNew.addEventListener('click', onNewSticky);
 btnUndo.addEventListener('click', onUndo);
+btnReset.addEventListener('click', onReset);
 
 function getRand(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) ) + min;
@@ -32,6 +33,16 @@ function onUndo (e) {
 		}
 	}
 	saveStickies();
+}
+
+function onReset(e) {
+	e.preventDefault();
+	
+	stickyArr = [];
+	stickyArrOld = [];
+
+	localStorage.clear();
+	removeStickies();
 }
 
 function onNewSticky(e, stickyCurr) {
