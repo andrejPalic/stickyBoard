@@ -1,5 +1,7 @@
 window.onload = onLoad;
 
+syncCheck = setInterval(onSyncCheck, 1000);
+
 var stickyArr;
 var stickyArrOld;
 
@@ -11,13 +13,27 @@ function getRand(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
+function onSyncCheck() {
+	let stickyArrJSONLocal = JSON.stringify(stickyArr);
+	let stickyArrJSON = localStorage.getItem('stickyArrSave');
+	let e = 'e';
+
+	if (stickyArrJSON != stickyArrJSONLocal && localStorage.length != 0) {
+		onLoad(e);
+	}
+	if (stickyArrJSON != 0 && localStorage.length == 0) {
+		onLoad(e);
+	}
+}
+
 function onLoad(e) {
 	let stickyArrJSON = localStorage.getItem('stickyArrSave');
 	stickyArr = JSON.parse(stickyArrJSON);
 
+	removeStickies();
 	if (stickyArr) {
 		for (i = 0; i < stickyArr.length; i++) {
-			onNewSticky(e, stickyArr[i]);
+			onNewSticky(event, stickyArr[i]);
 		}
 		saveStickies();
 	}
@@ -46,7 +62,7 @@ function onReset(e) {
 }
 
 function onNewSticky(e, stickyCurr) {
-	e.preventDefault();
+	if (e) {e.preventDefault()}
 
 	let sticky = document.createElement('div');
 	let txt = document.createElement('textarea');
@@ -205,11 +221,6 @@ function saveStickies() {
 
 	let stickyArrJSON = JSON.stringify(stickyArr);
 	localStorage.setItem('stickyArrSave', stickyArrJSON);
-
-	console.clear();
-	console.table(stickyArr);
-	console.table(stickyArrOld);
-	console.log(localStorage.stickyArrSave);
 }
 
 function removeStickies() {
