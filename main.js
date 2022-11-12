@@ -154,42 +154,35 @@ function onDelete(e) {
 
 function onStickyHover() {
 	let that = this;
-	let mouseDown;
 
 	stickyBlur('blur');
 	onmouseout = () => {
-		if (!mouseDown) {
-			stickyBlur('clear');
-		}
+		stickyBlur('clear');
 	}
 
-	that.addEventListener('mousedown', stickyHold);
-	function stickyHold() {
-		mouseDown = true;
-		stickyBlur('blur');
-
-		document.onmouseup = stickyRelease;
-
-		if (event.target === that) {
-			document.onmousemove = stickyDrag;
+	document.addEventListener('mousedown', onMouseDown);
+	function onMouseDown() {
+		if (event.target == that) {
 			document.body.appendChild(that);
-			saveStickies()
+			document.onmousemove = onMouseMove;
+			document.onmouseup = onMouseUp;
 		}
-		
-		function stickyDrag() {
-			that.style.top = event.clientY + 'px';
-			that.style.left = event.clientX + 'px';
+	}
+	function onMouseMove() {
+		that.style.top = event.clientY + 'px';
+		that.style.left = event.clientX + 'px';
+	}
+	function onMouseUp() {
+		stickyBlur('clear');
+		if (document.onmousemove) {
+			saveStickies();
 		}
-
-		function stickyRelease() {
-			mouseDown = false;
-			stickyBlur('clear');
-			document.onmousemove = null;
-		}
-	}	
+		document.onmousemove = null;
+	}
 
 	function stickyBlur(state) {
 		var sticky = document.querySelectorAll('.sticky');
+		
 		for (i = 0; i < sticky.length; i++) {
 			if (state == 'blur') {
 				sticky[i].classList.add('stickyBlur');
