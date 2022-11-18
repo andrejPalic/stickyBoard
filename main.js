@@ -61,14 +61,21 @@ function onReset(e) {
 	removeStickies();
 }
 
+function stickyNode(node) {
+	switch(node) {
+		case 'txt':
+			let txt = document.createElement('textarea');
+			txt.setAttribute('spellcheck', 'false');
+			txt.setAttribute('maxlength', '1500');
+			return txt;
+	}
+}
+
 function onNewSticky(e, stickyCurr) {
 	if (e) {e.preventDefault()}
 
 	let sticky = document.createElement('div');
-	let txt = document.createElement('textarea');
-
-	txt.setAttribute('spellcheck', 'false');
-	txt.setAttribute('maxlength', '1500');
+	let txt = stickyNode('txt')
 
 	sticky.appendChild(txt);
 	document.body.appendChild(sticky);
