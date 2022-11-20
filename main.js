@@ -65,9 +65,16 @@ function stickyNode(node) {
 	switch(node) {
 		case 'txt':
 			let txt = document.createElement('textarea');
+
 			txt.setAttribute('spellcheck', 'false');
 			txt.setAttribute('maxlength', '1500');
+
+			txt.addEventListener('input', onInput);
+			txt.addEventListener('focusout', saveStickies);
 			return txt;
+		case 'list':
+			let list = document.createElement('ul');
+			return list;
 	}
 }
 
@@ -75,7 +82,7 @@ function onNewSticky(e, stickyCurr) {
 	if (e) {e.preventDefault()}
 
 	let sticky = document.createElement('div');
-	let txt = stickyNode('txt')
+	let txt = stickyNode('txt');
 
 	sticky.appendChild(txt);
 	document.body.appendChild(sticky);
@@ -98,15 +105,12 @@ function onNewSticky(e, stickyCurr) {
 	}
 
 	sticky.addEventListener('mouseover', onStickyHover);
-	txt.addEventListener('input', onInput);
-	txt.addEventListener('focusout', saveStickies);
-
 	addButtons(sticky);
 }
 
 function addButtons(sticky) {
 	let stickyBtnForm = document.createElement('form');
-	let stickyBtnNames = ['Color', 'placeholder', 'Delete'];
+	let stickyBtnNames = ['Color', 'Switch to List', 'Delete'];
 
 	sticky.appendChild(stickyBtnForm);
 	for (j = 0; j < stickyBtnNames.length; j++) {
@@ -114,11 +118,16 @@ function addButtons(sticky) {
 		stickyBtn.innerHTML = stickyBtnNames[j];
 		
 		stickyBtnForm.appendChild(stickyBtn);
-		if (j != 2) {
-			stickyBtn.addEventListener('click', onChangeColor);
-		}
-		else {
-			stickyBtn.addEventListener('click', onDelete);
+		switch(stickyBtn.innerHTML) {
+			case 'Color':
+				stickyBtn.addEventListener('click', onChangeColor);
+				break;
+			case 'Switch to List':
+				stickyBtn.addEventListener('click', onContentChange);
+				break;
+			case 'Delete':
+				stickyBtn.addEventListener('click', onDelete);
+				break;
 		}
 	}
 }
@@ -150,6 +159,23 @@ function onChangeColor(e) {
 	sticky.classList.add('stickyColor' + newColorId);
 	document.body.appendChild(sticky);
 	saveStickies();
+}
+
+function onContentChange(e) {
+	e.preventDefault();
+
+	let txt = stickyNode('txt');
+	let list = stickyNode('list');
+	stickyContent = this.parentNode.parentNode.firstChild;
+
+	switch (stickyContent.nodeName) {
+		case txt.nodeName:
+			stickyContent.replaceWith(list);
+			break;
+		case list.nodeName:
+			stickyContent.replaceWith(txt);
+			break;
+	}
 }
 
 function onDelete(e) {
