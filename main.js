@@ -74,6 +74,11 @@ function stickyNode(node) {
 			return txt;
 		case 'list':
 			let list = document.createElement('ul');
+			let listItem = document.createElement('li');
+
+			listItem.innerHTML = 'Example test';
+			list.appendChild(listItem);
+
 			return list;
 	}
 }

@@ -49,6 +49,16 @@
 	border-radius: 1em;
 }
 
+.sticky > ul {
+	position: absolute;
+	top: 5%;
+	left: 10%;
+	width: 85%;
+	height: 90%;
+	padding-left: 0.25em;
+	font-size: 1.75em;
+}
+
 .sticky > form {
 	position: absolute;
 	top: 85%;
