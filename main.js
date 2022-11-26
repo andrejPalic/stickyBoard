@@ -71,12 +71,14 @@ function stickyNode(node) {
 
 			txt.addEventListener('input', onInput);
 			txt.addEventListener('focusout', saveStickies);
+
 			return txt;
 		case 'list':
 			let list = document.createElement('ul');
 			let listItem = document.createElement('li');
 
-			listItem.innerHTML = 'Example test';
+			listItem.setAttribute('contenteditable', 'true')
+			listItem.addEventListener('focusout', modifyList)
 			list.appendChild(listItem);
 
 			return list;
@@ -230,6 +232,18 @@ function onStickyHover() {
 			}
 		}
 		that.classList.remove('stickyBlur');
+	}
+}
+
+function modifyList() {
+	listItem = stickyNode('list').firstChild;
+	listCurr = this.parentNode;
+
+	if (this.textContent != '' && listCurr.lastChild.textContent != '') {
+		listCurr.appendChild(listItem);
+	}
+	if (!this.textContent && this !== listCurr.lastChild) {
+		listCurr.removeChild(this);
 	}
 }
 
