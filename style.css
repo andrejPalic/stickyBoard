@@ -57,6 +57,11 @@
 	height: 90%;
 	padding-left: 0.25em;
 	font-size: 1.75em;
+	color: #000;
+}
+
+.sticky > ul > li:empty {
+	color: rgba(0, 0, 0, 0.5);
 }
 
 .sticky > form {

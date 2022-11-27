@@ -78,6 +78,8 @@ function stickyNode(node) {
 			let listItem = document.createElement('li');
 
 			listItem.setAttribute('contenteditable', 'true')
+			listItem.setAttribute('spellcheck', 'false');
+			
 			listItem.addEventListener('focusout', modifyList)
 			list.appendChild(listItem);
 
