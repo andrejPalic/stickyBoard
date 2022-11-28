@@ -53,11 +53,22 @@
 	position: absolute;
 	top: 5%;
 	left: 10%;
-	width: 85%;
+	width: 83%;
 	height: 90%;
 	padding-left: 0.25em;
-	font-size: 1.75em;
+}
+
+.sticky > ul > li {
+	font-family: monospace;
+	padding: 0.1em;
 	color: #000;
+	font-size: 1.75em;
+}
+
+.sticky > ul > li:focus {
+	background: rgba(255, 255, 255, 0.5);
+	border-radius: 0.2em;
+	outline: none;
 }
 
 .sticky > ul > li:empty {
