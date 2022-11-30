@@ -256,18 +256,27 @@ function saveStickies() {
 
 	for (i = 0; i < sticky.length; i++) {
 		stickyCurr = sticky[i];
+		let listItemsArr = [];
+
+		for (j = 0; j < stickyCurr.firstChild.childElementCount - 1; j++) {
+			listItemsArr.push(stickyCurr.firstChild.childNodes[j].textContent);
+		}
 
 		stickyArr.push({
 			posX: stickyCurr.style.left,
 			posY: stickyCurr.style.top,
 			stickyColor: stickyCurr.classList[1],
 			txt: stickyCurr.firstChild.value,
-			txtSize: stickyCurr.firstChild.style.fontSize
-		});
+			list: listItemsArr
+			//txtSize: stickyCurr.firstChild.style.fontSize
+		})
 	}
-
 	let stickyArrJSON = JSON.stringify(stickyArr);
 	localStorage.setItem('stickyArrSave', stickyArrJSON);
+
+	console.clear();
+	console.table(stickyArr);
+	//console.log(localStorage);
 }
 
 function removeStickies() {
