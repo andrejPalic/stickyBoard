@@ -107,8 +107,24 @@ function onNewSticky(e, stickyCurr) {
 	else {
 		sticky.style.top = stickyCurr.posY;
 		sticky.style.left = stickyCurr.posX;
-		txt.value = stickyCurr.txt;
-		txt.style.fontSize = stickyCurr.txtSize;
+
+		switch (stickyCurr.txt) {
+			case undefined:
+				let list = stickyNode('list');
+				listItem = stickyNode('list').firstChild;
+				sticky.firstChild.replaceWith(list)
+				for (j = 0; j < stickyCurr.list.length; j++) {
+					listItem[j] = stickyNode('list').firstChild;
+					listItem[j].textContent = stickyCurr.list[j];
+					list.appendChild(listItem[j]);
+				}
+				list.appendChild(list.firstChild);
+				break;
+			default:
+				txt.value = stickyCurr.txt;
+				//txt.style.fontSize = stickyCurr.txtSize;
+				break;
+		}
 
 		sticky.classList.add('sticky', stickyCurr.stickyColor);
 	}
@@ -274,8 +290,8 @@ function saveStickies() {
 	let stickyArrJSON = JSON.stringify(stickyArr);
 	localStorage.setItem('stickyArrSave', stickyArrJSON);
 
-	console.clear();
-	console.table(stickyArr);
+	//console.clear();
+	//console.table(stickyArr);
 	//console.log(localStorage);
 }
 
