@@ -69,7 +69,7 @@ function stickyNode(node) {
 			txt.setAttribute('spellcheck', 'false');
 			txt.setAttribute('maxlength', '1500');
 
-			txt.addEventListener('input', onInput);
+			//txt.addEventListener('input', onInput);
 			txt.addEventListener('focusout', saveStickies);
 
 			return txt;
@@ -107,9 +107,27 @@ function onNewSticky(e, stickyCurr) {
 	else {
 		sticky.style.top = stickyCurr.posY;
 		sticky.style.left = stickyCurr.posX;
-		txt.value = stickyCurr.txt;
-		txt.style.fontSize = stickyCurr.txtSize;
 
+		switch (stickyCurr.txt) {
+			case undefined:
+				let list = stickyNode('list');
+				listItem = stickyNode('list').firstChild;
+
+				sticky.firstChild.replaceWith(list);
+				
+				for (j = 0; j < stickyCurr.list.length; j++) {
+					listItem[j] = stickyNode('list').firstChild;
+					listItem[j].textContent = stickyCurr.list[j];
+					list.appendChild(listItem[j]);
+				}
+				list.appendChild(list.firstChild);
+				break;
+			default:
+				txt.value = stickyCurr.txt;
+				txt.style.fontSize = 'xx-large';
+				//txt.style.fontSize = stickyCurr.txtSize;
+				break;
+		}
 		sticky.classList.add('sticky', stickyCurr.stickyColor);
 	}
 
@@ -141,7 +159,7 @@ function addButtons(sticky) {
 	}
 }
 
-function onInput() {
+/*function onInput() {
 	let fontSizeArr = [
 	'xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'
 	];
@@ -152,7 +170,7 @@ function onInput() {
 	while (this.clientHeight != this.scrollHeight && this.style.fontSize != 'xx-small') {
 		this.style.fontSize = fontSizeArr[fontSizeArr.indexOf(this.style.fontSize) - 1];
 	}
-}
+}*/
 
 function onChangeColor(e) {
 	e.preventDefault();
@@ -185,6 +203,7 @@ function onContentChange(e) {
 			stickyContent.replaceWith(txt);
 			break;
 	}
+	saveStickies();
 }
 
 function onDelete(e) {
@@ -247,6 +266,7 @@ function modifyList() {
 	if (!this.textContent && this !== listCurr.lastChild) {
 		listCurr.removeChild(this);
 	}
+	saveStickies();
 }
 
 function saveStickies() {
@@ -274,8 +294,8 @@ function saveStickies() {
 	let stickyArrJSON = JSON.stringify(stickyArr);
 	localStorage.setItem('stickyArrSave', stickyArrJSON);
 
-	console.clear();
-	console.table(stickyArr);
+	//console.clear();
+	//console.table(stickyArr);
 	//console.log(localStorage);
 }
 
