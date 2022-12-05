@@ -69,7 +69,7 @@ function stickyNode(node) {
 			txt.setAttribute('spellcheck', 'false');
 			txt.setAttribute('maxlength', '1500');
 
-			txt.addEventListener('input', onInput);
+			//txt.addEventListener('input', onInput);
 			txt.addEventListener('focusout', saveStickies);
 
 			return txt;
@@ -122,6 +122,7 @@ function onNewSticky(e, stickyCurr) {
 				break;
 			default:
 				txt.value = stickyCurr.txt;
+				txt.style.fontSize = 'xx-large';
 				//txt.style.fontSize = stickyCurr.txtSize;
 				break;
 		}
@@ -157,7 +158,7 @@ function addButtons(sticky) {
 	}
 }
 
-function onInput() {
+/*function onInput() {
 	let fontSizeArr = [
 	'xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'
 	];
@@ -168,7 +169,7 @@ function onInput() {
 	while (this.clientHeight != this.scrollHeight && this.style.fontSize != 'xx-small') {
 		this.style.fontSize = fontSizeArr[fontSizeArr.indexOf(this.style.fontSize) - 1];
 	}
-}
+}*/
 
 function onChangeColor(e) {
 	e.preventDefault();
@@ -201,6 +202,7 @@ function onContentChange(e) {
 			stickyContent.replaceWith(txt);
 			break;
 	}
+	saveStickies();
 }
 
 function onDelete(e) {
@@ -263,6 +265,7 @@ function modifyList() {
 	if (!this.textContent && this !== listCurr.lastChild) {
 		listCurr.removeChild(this);
 	}
+	saveStickies();
 }
 
 function saveStickies() {
